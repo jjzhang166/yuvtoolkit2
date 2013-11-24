@@ -1,5 +1,5 @@
 #include "YT_Interface.h"
-#include <QtGui>
+#include <QWidget>
 
 class VideoView;
 

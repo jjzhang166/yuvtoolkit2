@@ -1,4 +1,5 @@
 #include "NameInput.h"
+#include <QMessageBox>
 
 NameInput::NameInput()
 {

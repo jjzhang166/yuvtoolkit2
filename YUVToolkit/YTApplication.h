@@ -1,7 +1,7 @@
 #ifndef YTAPPLICATION_H
 #define YTAPPLICATION_H
 
-#include <QtGui/QApplication>
+#include <QApplication>
 
 class YTApplication : public QApplication
 {

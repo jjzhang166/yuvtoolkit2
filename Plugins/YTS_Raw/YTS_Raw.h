@@ -14,6 +14,7 @@ class RawPlugin : public QObject, public YTPlugIn
 {
 	Q_OBJECT;
 	Q_INTERFACES(YTPlugIn);
+    Q_PLUGIN_METADATA(IID "net.yocto.YUVToolkit.PlugIn/1.3")
 public:
 	virtual RESULT Init(Host*);
 
@@ -61,11 +62,11 @@ protected:
 private:
 	double			m_FPS;
 	unsigned int	m_FrameIndex;
-	
+    int             m_InsertFrame0; // first timestamp is not zero, insert frame 0
+
 	unsigned int	m_NumFrames;
 	unsigned int	m_Duration;
 	QList<unsigned int> m_TimeStamps; // custom time stamps
-	int             m_InsertFrame0; // first timestamp is not zero, insert frame 0
 
 	QSharedPointer<QFile> m_File;
 

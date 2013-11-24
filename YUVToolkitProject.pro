@@ -5,8 +5,9 @@ SUBDIRS  = \
     Plugins/YT_MeasuresBasic \
     Plugins/YTS_Raw
 
-win32 {
-SUBDIRS  = Plugins/YTR_D3D
+equals($$QMAKE_CC, "cl") {
+    message("Running with Visual C++.")
+    SUBDIRS  = Plugins/YTR_D3D
 }
 
 # build must be last:

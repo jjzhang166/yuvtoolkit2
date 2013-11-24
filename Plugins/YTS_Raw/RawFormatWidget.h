@@ -3,7 +3,7 @@
 
 #include "../YT_Interface.h"
 
-#include <QtGui>
+#include <QWidget>
 #include <QtCore>
 
 #include "ui_RawFormatWidget.h"

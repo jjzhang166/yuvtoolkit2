@@ -9,6 +9,7 @@
 #include "ColorConversion.h"
 #include "Settings.h"
 #include <assert.h>
+#include <QAction>
 
 VideoViewList::VideoViewList(QMainWindow* mainWindow, RendererWidget* rw) :
 	m_RenderWidget(rw), m_MainWindow(mainWindow),
@@ -348,7 +349,7 @@ void VideoViewList::OnVideoViewTransformTriggered( QAction* action, VideoView* v
 
 	if (!hasView)
 	{
-		VideoView* planeVv = NewVideoViewInternal(data->outputName.toAscii(), m_IDCounter++);
+        VideoView* planeVv = NewVideoViewInternal(data->outputName.toUtf8(), m_IDCounter++);
 
 		Transform* transform = data->transformPlugin->NewTransform(data->transformName);
 

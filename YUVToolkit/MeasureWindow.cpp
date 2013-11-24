@@ -5,6 +5,8 @@
 #include "VideoViewList.h"
 #include "Settings.h"
 
+#include <QToolBar>
+
 MeasureResultsModel::MeasureResultsModel( QObject *parent, QList<MeasureItem>& results) :
 QAbstractTableModel(parent), m_Results(results)
 {
@@ -172,7 +174,7 @@ void MeasureResultsModel::ResultsUpdated()
 	emit dataChanged(index(0,0), index(8, 1));
 }
 
-MeasureWindow::MeasureWindow(VideoViewList* vvList, QWidget *parent, Qt::WFlags flags) : 
+MeasureWindow::MeasureWindow(VideoViewList* vvList, QWidget *parent, Qt::WindowFlags flags) :
 	QMainWindow(parent, flags), m_VideoViewList(vvList), m_ToolBar(new QToolBar(this)),
 	m_ResultsTable(new QTableView(this)), m_ResultsModel(NULL), m_UpdateTimer(NULL),
 	m_ShowDisortionMap(false)

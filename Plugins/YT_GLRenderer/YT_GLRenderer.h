@@ -2,13 +2,14 @@
 #define GLRENDERER_H
 
 #include "../YT_Interface.h"
-#include <QtGui>
+#include <QWidget>
 #include <QtOpenGL>
 
 class OpenGLRendererPlugin : public QObject, public YTPlugIn
 {
 	Q_OBJECT;
 	Q_INTERFACES(YTPlugIn);
+    Q_PLUGIN_METADATA(IID "net.yocto.YUVToolkit.PlugIn/1.3");
 public:
 	virtual RESULT Init(Host*);
 

@@ -15,9 +15,15 @@
 #include "TextFile.h"
 #include "NameInput.h"
 
+
+#include <QDockWidget>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QDesktopWidget>
+
 #include <QScriptEngine>
-#include <QScriptEngineDebugger>
 #include <QScriptValue>
+#include <QScriptEngineDebugger>
 
 #ifndef MAX
 #define MAX(a,b)            (((a) > (b)) ? (a) : (b))
@@ -34,7 +40,7 @@
 #define SLIDER_STEP_MS  100
 
 int MainWindow::windowCounter = 0;
-MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) :
+MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 	QMainWindow(parent, flags), m_VideoViewList(0),
 	m_ActiveVideoView(0), m_Slider(0),
 	m_TimeLabel1(0), m_TimeLabel2(0), m_RenderSpeedLabel(0),
@@ -164,10 +170,10 @@ MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) :
 	m_ActionsButton = new QToolButton( ui.mainToolBar );
 	ui.mainToolBar->addWidget(m_ActionsButton);
 	m_ActionsButton->setIcon(iconPlane);
-	m_ActionsButton->setText(QApplication::translate("MainWindow", "Actions", 0, QApplication::UnicodeUTF8));
+    m_ActionsButton->setText(QApplication::translate("MainWindow", "Actions", 0));
 	m_ActionsButton->setShortcut(tr("ALT+A"));
-	m_ActionsButton->setToolTip(QApplication::translate("MainWindow", "Show actions for opened videos (Alt+A)", 0, QApplication::UnicodeUTF8));
-	m_ActionsButton->setStatusTip(QApplication::translate("MainWindow", "Show actions for opened videos (Alt+A)", 0, QApplication::UnicodeUTF8));
+    m_ActionsButton->setToolTip(QApplication::translate("MainWindow", "Show actions for opened videos (Alt+A)", 0));
+    m_ActionsButton->setStatusTip(QApplication::translate("MainWindow", "Show actions for opened videos (Alt+A)", 0));
 	m_ActionsButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	m_ActionsButton->setPopupMode( QToolButton::InstantPopup);
 
@@ -182,9 +188,9 @@ MainWindow::MainWindow(QWidget *parent, Qt::WFlags flags) :
 	QToolButton* graphButton = new QToolButton( ui.mainToolBar );
 	ui.mainToolBar->addWidget(graphButton);
 	graphButton->setIcon(iconGraph);
-	graphButton->setText(QApplication::translate("MainWindow", "&Graph", 0, QApplication::UnicodeUTF8));
-	graphButton->setToolTip(QApplication::translate("MainWindow", "Compare videos and show graph", 0, QApplication::UnicodeUTF8));
-	graphButton->setStatusTip(QApplication::translate("MainWindow", "Compare videos and show graph with results", 0, QApplication::UnicodeUTF8));
+    graphButton->setText(QApplication::translate("MainWindow", "&Graph", 0));
+    graphButton->setToolTip(QApplication::translate("MainWindow", "Compare videos and show graph", 0));
+    graphButton->setStatusTip(QApplication::translate("MainWindow", "Compare videos and show graph with results", 0));
 	graphButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	graphButton->setEnabled(false);
 #endif
@@ -240,7 +246,7 @@ MainWindow::~MainWindow()
 	delete m_VideoViewList;
 }
 
-void MainWindow::closeEvent( QCloseEvent *event )
+void MainWindow::closeEvent( QCloseEvent * )
 {
 	while (m_VideoViewList->size())
 	{
@@ -250,7 +256,7 @@ void MainWindow::closeEvent( QCloseEvent *event )
 	windowCounter--;
 }
 
-void MainWindow::on_action_Play_Pause_triggered(bool p)
+void MainWindow::on_action_Play_Pause_triggered(bool)
 {
 	m_VideoViewList->GetControl()->PlayPause();
 }
@@ -374,12 +380,11 @@ void MainWindow::on_action_Open_triggered()
 
 		for ( int i=0; i<files.size(); i++) // if at least one QUrl is present in list
 		{
-			Phonon::MediaObject* s = new Phonon::MediaObject();
-			s->setCurrentSource(Phonon::MediaSource(files[i]));
-			m.append(s);
-			Phonon::createPath(s, &a);
-
-			s->play();
+            // QMediaObject* s = new QMediaObject();
+            // s->setCurrentSource(QMediaSource(files[i]));
+            // m.append(s);
+            // Phonon::createPath(s, &a);
+            // s->play();
 		}
 	}
 
@@ -569,7 +574,7 @@ VideoView* MainWindow::openFileInternal( QString strPath )
 		return NULL;
 	}
 
-	return m_VideoViewList->NewVideoViewSource(strPath.toAscii());
+    return m_VideoViewList->NewVideoViewSource(strPath.toUtf8());
 }
 
 void MainWindow::play( bool play )
@@ -621,7 +626,8 @@ void MainWindow::openScript( QString strPath, bool debug )
 	QMainWindow* debuggerWindow = NULL;
 
 	m_Engine->setProcessEventsInterval(50);
-	m_Engine->globalObject().setProperty("yt", m_Engine->newQObject(this));
+    QScriptValue scriptMainWindow = m_Engine->newQObject(this);
+    m_Engine->globalObject().setProperty("yt", scriptMainWindow);
 
 	if (debug)
 	{
@@ -637,8 +643,7 @@ void MainWindow::openScript( QString strPath, bool debug )
 		m_Debugger->action(QScriptEngineDebugger::InterruptAction)->trigger();
 	}
 
-	QScriptValue& scriptMainWindow = m_Engine->globalObject().property("yt");
-	scriptMainWindow.setProperty("scoreWindow", m_Engine->newQObject(m_ScoreWindow));
+    scriptMainWindow.setProperty("scoreWindow", m_Engine->newQObject(m_ScoreWindow));
 
 	scriptMainWindow.setProperty("actionScore", m_Engine->newQObject(m_ScoreDockWidget->toggleViewAction()));
 	scriptMainWindow.setProperty("actionCompare", m_Engine->newQObject(ui.action_Compare));

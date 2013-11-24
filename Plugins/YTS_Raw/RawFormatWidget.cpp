@@ -93,6 +93,8 @@ void RawFormatWidget::OnApply()
 
 void RawFormatWidget::showEvent( QShowEvent *event )
 {
+    UNUSED(event);
+
 	if (!m_Format)
 	{
 		m_Format = GetHost()->NewFormat();

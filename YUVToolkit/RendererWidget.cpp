@@ -6,7 +6,9 @@
 #include "BuildControl.h"
 
 #include <assert.h>
-
+#include <QPainter>
+#include <QMouseEvent>
+#include <QResizeEvent>
 
 void RendererWidget::paintEvent( QPaintEvent* )
 {

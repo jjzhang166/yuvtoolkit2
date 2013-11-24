@@ -9,7 +9,7 @@
 #define MIN(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
 
-ScoreWindow::ScoreWindow( QWidget *parent, Qt::WFlags flags ) : QWidget(parent, flags)
+ScoreWindow::ScoreWindow( QWidget *parent, Qt::WindowFlags flags ) : QWidget(parent, flags)
 {
 	ui.setupUi(this);
 

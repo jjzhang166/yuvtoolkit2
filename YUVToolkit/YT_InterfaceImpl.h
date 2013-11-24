@@ -2,7 +2,8 @@
 #define INTERFACE_IMPL_H
 
 #include "../Plugins/YT_Interface.h"
-#include <QtGui>
+#include <QWidget>
+#include <QMainWindow>
 #include <QVariant>
 
 class HostImpl;
@@ -46,7 +47,6 @@ public:
 	virtual bool operator== (const Format &f);
 	virtual bool operator!= (const Format &f);
 	virtual Format& operator= (const Format &f);
-	virtual Format& operator= (Format &f);
 };
 
 class FramePool;

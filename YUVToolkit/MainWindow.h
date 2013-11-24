@@ -1,10 +1,14 @@
 #ifndef RAWVIDEOTOOLKIT_H
 #define RAWVIDEOTOOLKIT_H
 
-#include <QtGui>
-#include <Phonon/MediaSource>
-#include <Phonon/MediaObject>
-#include <Phonon/AudioOutput>
+#include <Qt>
+#include <QWidget>
+#include <QLabel>
+#include <QToolButton>
+
+// #include <QMediaSource>
+#include <QMediaObject>
+#include <QAudioOutput>
 
 // #include <QtScript>
 #include "ui_MainWindow.h"
@@ -30,7 +34,7 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT;
 public:
-	MainWindow(QWidget *parent = 0, Qt::WFlags flags = 0);
+    MainWindow(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~MainWindow();
 
 	virtual void contextMenuEvent(QContextMenuEvent *event);
@@ -161,8 +165,8 @@ private:
 	QList<QAction*> m_RendererList;
 	QString m_RenderType;
 
-	QList<Phonon::MediaObject*> m;
-	Phonon::AudioOutput a;
+    QList<QMediaObject*> m;
+    QAudioOutput a;
 	bool m_AllowContextMenu;
 
 	QScriptEngine* m_Engine;

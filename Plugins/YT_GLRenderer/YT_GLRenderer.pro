@@ -1,3 +1,6 @@
+! qtHaveModule(opengl) {
+    error(QT doesnt have opengl support)
+}
 TARGET   = YT_GLRenderer
 QT      += opengl
 

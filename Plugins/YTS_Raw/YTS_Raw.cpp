@@ -1,7 +1,7 @@
 #include "YTS_Raw.h"
 #include "RawFormatWidget.h"
 
-#include <QtGui>
+#include <QWidget>
 #include <math.h>
 #include <assert.h>
 
@@ -21,9 +21,6 @@ QString resolution_names[RESOLUTION_COUNT] =
 	"4320P  (7680 x 4320)",
 	"8640P (15360 x 8640)",
 };
-
-
-Q_EXPORT_PLUGIN2(YTS_Raw, RawPlugin)
 
 #ifndef MyMin
 #	define MyMin(x,y) ((x>y)?y:x)
@@ -51,6 +48,7 @@ RESULT RawPlugin::Init( Host* host)
 
 Source* RawPlugin::NewSource( const QString& name )
 {
+    UNUSED(name);
 	YTS_Raw* source = new YTS_Raw;
 
 	return source;
@@ -63,7 +61,7 @@ void RawPlugin::ReleaseSource( Source* source)
 
 
 YTS_Raw::YTS_Raw() : m_FPS(30), m_FrameIndex(0), m_InsertFrame0(0),
-	m_NumFrames(0), m_Duration(0), m_RawFormatWidget(0), m_Callback(0)
+    m_NumFrames(0),  m_Duration(0), m_RawFormatWidget(0), m_Callback(0)
 {
 }
 
@@ -73,6 +71,7 @@ YTS_Raw::~YTS_Raw()
 
 RESULT YTS_Raw::EnumSupportedItems( char** items )
 {
+    UNUSED(items);
 	return OK;
 }
 
@@ -193,10 +192,10 @@ RESULT YTS_Raw::Init(SourceCallback* callback, const QString& path)
 			m_Format->SetColor(Y800);
 		}else
 		{
-			COLOR_FORMAT cc = (COLOR_FORMAT) FOURCC(fourcc.at(0).toAscii(), 
-				fourcc.at(1).toAscii(), 
-				fourcc.at(2).toAscii(), 
-				fourcc.at(3).toAscii());
+            COLOR_FORMAT cc = (COLOR_FORMAT) FOURCC(fourcc.at(0).toLatin1(),
+                fourcc.at(1).toLatin1(),
+                fourcc.at(2).toLatin1(),
+                fourcc.at(3).toLatin1());
 			if (cc == IYUV)
 			{
 				cc = I420;
@@ -444,7 +443,7 @@ RESULT YTS_Raw::GetTimeStamps( QList<unsigned int>& timeStamps )
 	}else
 	{		
 		timeStamps.reserve(m_NumFrames);
-		for (int i=0; i<m_NumFrames; i++) {
+        for (unsigned int i=0; i<m_NumFrames; i++) {
 			timeStamps.append(IndexToPTS(i));
 		}
 	}
@@ -462,7 +461,7 @@ RESULT YTS_Raw::SetTimeStamps( QList<unsigned int> timeStamps )
 		// Ensure that time stamp list is as big as the number of frames + 1
 		// last one for duration
 
-		while (m_TimeStamps.size()>m_NumFrames+1)
+        while ((unsigned int)m_TimeStamps.size()>m_NumFrames+1)
 		{
 			m_TimeStamps.removeLast();
 		}
@@ -477,7 +476,7 @@ RESULT YTS_Raw::SetTimeStamps( QList<unsigned int> timeStamps )
 		}
 
 		unsigned int lastTs = (m_TimeStamps.size())?m_TimeStamps.last():0;
-		for (int i=1; m_TimeStamps.size()<m_NumFrames+1; i++)
+        for (unsigned int i=1; (unsigned int)m_TimeStamps.size()<m_NumFrames+1; i++)
 		{
 			m_TimeStamps.append(lastTs+IndexToPTSInternal(i));
 		}

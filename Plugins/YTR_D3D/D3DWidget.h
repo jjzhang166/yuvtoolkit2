@@ -1,7 +1,7 @@
 #ifndef D3D_WIDGET_H
 #define D3D_WIDGET_H
 
-#include <QtGui>
+#include <QWidget>
 #include <d3d9.h>
 
 class D3DWidget : public QWidget

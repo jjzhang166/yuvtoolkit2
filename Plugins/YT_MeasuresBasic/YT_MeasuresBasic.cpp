@@ -59,7 +59,7 @@ const MeasureCapabilities& MeasuresBasic::GetCapabilities()
 		m_Capabilities.hasColorDistortionMap = false;
 		m_Capabilities.hasPlaneDistortionMap = true;
 
-		MeasureInfo info = {0};
+        MeasureInfo info;
 		info.name = "MSE";
 		info.unit = "";
 		info.lowerRange = 1;

@@ -7,6 +7,7 @@ class MeasuresBasicPlugin : public QObject, public YTPlugIn
 {
 	Q_OBJECT;
 	Q_INTERFACES(YTPlugIn);
+    Q_PLUGIN_METADATA(IID "net.yocto.YUVToolkit.PlugIn/1.3")
 public:
 	virtual RESULT Init(Host*);
 

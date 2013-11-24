@@ -4,6 +4,8 @@
 #include <QtCore>
 class QWidget;
 
+#define UNUSED(x) (void)(x)
+
 #define INVALID_PTS		0xffffffff
 #define FOURCC(a,b,c,d) (((unsigned int)a)|(((unsigned int)b)<<8)|(((unsigned int)c)<<16)|(((unsigned int)d)<<24)) 
 
@@ -97,7 +99,6 @@ public:
 	virtual bool operator== (const Format &f) = 0;
 	virtual bool operator!= (const Format &f) = 0;
 	virtual Format& operator= (const Format &f) = 0;
-	virtual Format& operator= (Format &f) = 0;
 };
 
 typedef QSharedPointer<Format> FormatPtr;
@@ -195,20 +196,20 @@ public:
 
 	virtual RESULT Init(Host*) = 0;
 
-	virtual Source* NewSource(const QString& name) {return NULL;}
+    virtual Source* NewSource(const QString& name) {UNUSED(name); return NULL;}
 	virtual void ReleaseSource(Source*) {}
 
-	virtual Renderer* NewRenderer(QWidget* widget, const QString& name) {return NULL;}
+    virtual Renderer* NewRenderer(QWidget* widget, const QString& name) {UNUSED(widget); UNUSED(name); return NULL;}
 	virtual void ReleaseRenderer(Renderer*) {}
 
-	virtual Transform* NewTransform(const QString& name) {return NULL;}
+    virtual Transform* NewTransform(const QString& name) {UNUSED(name); return NULL;}
 	virtual void ReleaseTransform(Transform*) {}
 
-	virtual Measure* NewMeasure(const QString& name) {return NULL;}
+    virtual Measure* NewMeasure(const QString& name) {UNUSED(name); return NULL;}
 	virtual void ReleaseMeasure(Measure*) {}
 };
 
-Q_DECLARE_INTERFACE(YTPlugIn, "net.yocto.YUVToolkit.PlugIn/1.2")
+Q_DECLARE_INTERFACE(YTPlugIn, "net.yocto.YUVToolkit.PlugIn/1.3")
 
 // Each module below should manage memory of its own
 enum SOURCE_TYPE {
@@ -351,12 +352,27 @@ public:
 	virtual void Process(FramePtr source1, FramePtr source2, unsigned int transformId, int plane, FramePtr result) = 0;
 
 	 // Returns what format that is supported	
-	virtual RESULT GetSupportedModes(FormatPtr sourceFormat, QList<QString>& outputNames, QList<QString>& statNames) {return OK;}
+    virtual RESULT GetSupportedModes(FormatPtr sourceFormat, QList<QString>& outputNames, QList<QString>& statNames) {
+        UNUSED(sourceFormat);
+        UNUSED(outputNames);
+        UNUSED(statNames);
+        return OK;
+    }
 
-	virtual RESULT GetFormat(FormatPtr sourceFormat, const QString& outputName, FormatPtr outputFormat) {return OK;}
+    virtual RESULT GetFormat(FormatPtr sourceFormat, const QString& outputName, FormatPtr outputFormat) {
+        UNUSED(sourceFormat);
+        UNUSED(outputFormat);
+        UNUSED(outputName);
+        return OK;
+    }
 
 	// Process
-	virtual RESULT Process(const FramePtr input, QMap<QString, FramePtr>& outputs, QMap<QString, QVariant>& stats) {return OK;}
+    virtual RESULT Process(const FramePtr input, QMap<QString, FramePtr>& outputs, QMap<QString, QVariant>& stats) {
+        UNUSED(input);
+        UNUSED(outputs);
+        UNUSED(stats);
+        return OK;
+    }
 };
 
 struct MeasureInfo
@@ -371,6 +387,13 @@ struct MeasureInfo
 	// A measure plugin can support multiple measures, but if multiple measures are within
 	// same plugin, they MUST all have or not have distortion map.
 	bool hasDistortionMap; 
+
+    MeasureInfo() {
+        upperRange = 0;
+        lowerRange = 0;
+        biggerValueIsBetter = true;
+        hasDistortionMap = true;
+    }
 };
 
 struct MeasureCapabilities

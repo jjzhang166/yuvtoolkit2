@@ -1,7 +1,11 @@
 #ifndef CLICKABLE_SLIDER
 #define CLICKABLE_SLIDER
 
-#include <QtGui>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QWidget>
+#include <QSlider>
+#include <QStyle>
 
 class QClickableSlider : public QSlider 
 {

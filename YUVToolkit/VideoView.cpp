@@ -1,5 +1,8 @@
 #include "YT_Interface.h"
-#include <QtGui>
+#include <QWidget>
+#include <QAction>
+#include <QMenu>
+#include <QDockWidget>
 
 #include "VideoView.h"
 #include "RendererWidget.h"

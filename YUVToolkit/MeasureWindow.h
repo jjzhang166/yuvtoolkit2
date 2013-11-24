@@ -2,7 +2,8 @@
 #define MEASURE_WINDOW_H
 
 #include "YT_InterfaceImpl.h"
-#include <QtGui>
+#include <QTableView>
+#include <QWidget>
 #include <QtCore>
 class VideoViewList;
 class VideoView;
@@ -42,7 +43,7 @@ class MeasureWindow : public QMainWindow
 	QList<MeasureItem> m_MeasureItemList;
 	bool m_ShowDisortionMap;
 public:
-	MeasureWindow(VideoViewList* vvList, QWidget *parent = 0, Qt::WFlags flags = 0);
+    MeasureWindow(VideoViewList* vvList, QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~MeasureWindow();
 
 	QToolBar* GetToolBar() {return m_ToolBar;}

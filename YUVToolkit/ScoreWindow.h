@@ -1,7 +1,7 @@
 #ifndef ScoreWindow_H
 #define ScoreWindow_H
 
-#include <QtGui>
+#include <QRadioButton>
 #include <QStringList>
 #include <QList>
 #include "ui_ScoreWindow.h"
@@ -12,12 +12,13 @@
 #include <cstdlib>
 #include <ctime>
 #include <QWheelEvent>
+#include <QLabel>
 
 class ScoreWindow : public QWidget
 {
 	Q_OBJECT;
 public:
-	ScoreWindow(QWidget *parent = 0, Qt::WFlags flags = 0);
+    ScoreWindow(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~ScoreWindow();
 
 public slots:

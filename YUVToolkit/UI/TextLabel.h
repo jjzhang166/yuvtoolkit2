@@ -1,7 +1,13 @@
 #ifndef TEXT_LABEL_H
 #define TEXT_LABEL_H
 
-#include <QtGui>
+#include <QWidget>
+#include <QLabel>
+#include <QSizePolicy>
+#include <QPainter>
+#include <QFontMetrics>
+#include <QString>
+#include <QRect>
 
 class TextLabel : public QLabel
 {

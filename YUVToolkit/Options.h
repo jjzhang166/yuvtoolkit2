@@ -1,14 +1,14 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
-#include <QtGui>
+#include <QWidget>
 #include "ui_Options.h"
 
 class Options : public QDialog
 {
 	Q_OBJECT;
 public:
-	Options(QWidget *parent = 0, Qt::WFlags flags = 0);
+    Options(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~Options();
 
 	int exec(int index);

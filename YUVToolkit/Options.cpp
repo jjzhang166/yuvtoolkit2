@@ -7,7 +7,7 @@
 #include <shobjidl.h>
 #endif
 
-Options::Options( QWidget *parent, Qt::WFlags flags ) : QDialog(parent, flags)
+Options::Options( QWidget *parent, Qt::WindowFlags flags ) : QDialog(parent, flags)
 {
 	ui.setupUi(this);
 

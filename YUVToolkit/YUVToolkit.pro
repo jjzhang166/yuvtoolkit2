@@ -1,10 +1,9 @@
-QT       = core gui script scripttools opengl
+QT       = core gui script scripttools opengl widgets multimedia
 
 TARGET = YUVToolkit
 TEMPLATE = app
 
 HEADERS += ./ColorConversion.h \
-	./VideoQueue.h \
 	./UI/ClickableSlider.h \
 	./Layout.h \
 	./MainWindow.h \
@@ -20,7 +19,10 @@ HEADERS += ./ColorConversion.h \
 	./YT_InterfaceImpl.h \
 	../Plugins/YT_Interface.h \
 	./YTApplication.h \
-	./ColorMap.h
+        ./ColorMap.h \
+        ./ScoreWindow.h \
+        ./NameInput.h \
+        ./TextFile.h
 SOURCES += \
 	./ColorConversion.cpp \
 	./Layout.cpp \
@@ -36,9 +38,14 @@ SOURCES += \
 	./VideoViewList.cpp \
 	./YT_InterfaceImpl.cpp \
 	./YTApplication.cpp \
-	./ColorMap.cpp
+        ./ColorMap.cpp \
+        ./ScoreWindow.cpp \
+        ./NameInput.cpp \
+        ./TextFile.cpp
 FORMS += ./MainWindow.ui \
-	 ./Options.ui
+         ./Options.ui \
+        ./ScoreWindow.ui \
+        ./NameInput.ui
 RESOURCES += YUVToolkit.qrc
 
 INCLUDEPATH += . \
@@ -58,15 +65,16 @@ VERSION_4 = $$cat(../Setup/VERSION_4)
 VERSION = $${VERSION_1}.$${VERSION_2}.$${VERSION_3}.$${VERSION_4}
 
 FFMPEG_DIR = $$PWD/../3rdparty/ffmpeg
-QT_LIBS = Core Gui Script ScriptTools OpenGL
+QT_LIBS = Core Gui Script ScriptTools OpenGL Widgets Multimedia
 win32 {
 	LIBS += -L"$${FFMPEG_DIR}/lib_win32"
 
 	EXTRA_DLLS += \
 		$${FFMPEG_DIR}/bin/swscale-0.dll \
-		$${FFMPEG_DIR}/bin/avutil-50.dll \
-		${QTDIR}/bin/mingwm10.dll \
+                $${FFMPEG_DIR}/bin/avutil-50.dll \
+                #${QTDIR}/bin/mingwm10.dll \
 		${QTDIR}/bin/libgcc*.dll \
+                ${QTDIR}/bin/libstdc++*.dll \
 
 	# Copy extra DLL files
 	EXTRA_DLLS_WIN = $${EXTRA_DLLS}
@@ -80,11 +88,11 @@ win32 {
 	# Copy QT files
 	CONFIG(debug, debug|release) {
 		for(QT_LIB,QT_LIBS){
-			QMAKE_POST_LINK +=$$quote(cmd /c copy /y ${QTDIR}\\bin\\Qt$${QT_LIB}d4.dll $${DESTDIR_WIN}$$escape_expand(\\n\\t))
+                        QMAKE_POST_LINK +=$$quote(cmd /c copy /y ${QTDIR}\\bin\\Qt5$${QT_LIB}d.dll $${DESTDIR_WIN}$$escape_expand(\\n\\t))
 		}
 	} else {
 		for(QT_LIB,QT_LIBS){
-			QMAKE_POST_LINK +=$$quote(cmd /c copy /y ${QTDIR}\\bin\\Qt$${QT_LIB}4.dll $${DESTDIR_WIN}$$escape_expand(\\n\\t))
+                        QMAKE_POST_LINK +=$$quote(cmd /c copy /y ${QTDIR}\\bin\\Qt5$${QT_LIB}.dll $${DESTDIR_WIN}$$escape_expand(\\n\\t))
 		}
 	}
 

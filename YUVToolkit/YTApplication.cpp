@@ -3,6 +3,9 @@
 #include "YT_InterfaceImpl.h"
 #include "YTApplication.h"
 
+#include <QEvent>
+#include <QFileOpenEvent>
+
 HostImpl* g_Host = 0;
 Host* GetHost()
 {

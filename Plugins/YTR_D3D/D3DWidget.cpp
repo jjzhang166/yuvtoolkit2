@@ -25,7 +25,7 @@ QPaintEngine * D3DWidget::paintEngine() const
 	return NULL;
 }
 
-void D3DWidget::resizeEvent( QResizeEvent* e)
+void D3DWidget::resizeEvent( QResizeEvent* )
 {
 }
 
@@ -56,11 +56,11 @@ HRESULT D3DWidget::InitD3D()
 	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
 	d3dpp.PresentationInterval       = D3DPRESENT_INTERVAL_ONE;
 	d3dpp.Flags                      = D3DPRESENTFLAG_VIDEO;
-	d3dpp.hDeviceWindow              = winId();
+    d3dpp.hDeviceWindow              = (HWND)winId();
 
 
 	hr = d3D->CreateDevice(adapter,
-		D3DDEVTYPE_HAL, winId(),
+        D3DDEVTYPE_HAL, (HWND) winId(),
 		D3DCREATE_SOFTWARE_VERTEXPROCESSING|D3DCREATE_MULTITHREADED,
 		&d3dpp, &d3DDevice);
 

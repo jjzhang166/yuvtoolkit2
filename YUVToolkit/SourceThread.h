@@ -2,7 +2,7 @@
 #define GRAPH_H
 
 #include "YT_InterfaceImpl.h"
-#include <QtGui>
+#include <QWidget>
 #include <QThread>
 #include <QMutex>
 #include <QWaitCondition>

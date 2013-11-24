@@ -2,6 +2,7 @@
 
 #include "Layout.h"
 #include "VideoView.h"
+#include <QMouseEvent>
 
 #ifndef MAX
 #define MAX(a,b)            (((a) > (b)) ? (a) : (b))

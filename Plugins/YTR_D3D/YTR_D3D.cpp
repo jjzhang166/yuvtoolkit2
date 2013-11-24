@@ -4,8 +4,6 @@
 
 #define RENDER_FREQ	60 
 
-Q_EXPORT_PLUGIN2(YTR_D3D, YTR_D3DPlugin)
-
 Host* g_Host = 0;
 Host* GetHost()
 {
@@ -39,6 +37,7 @@ void YTR_D3DPlugin::ReleaseRenderer( Renderer* parent )
 YTR_D3D::YTR_D3D(Host* host, QWidget* widget, const QString& name) 
 	: m_Host(host), D3DWidget(widget), m_NeedReset(false), m_ResetLastCheckedWidth(0), m_ResetLastCheckedHeight(0)
 {
+    UNUSED(name);
 	QTimer *timer = new QTimer(widget);
 	connect(timer, SIGNAL(timeout()), this, SLOT(OnResizeTimer()));
 

@@ -1,8 +1,6 @@
 #include "YT_MeasuresBasic.h"
 #include "YT_MeasuresBasicPlugin.h"
 
-Q_EXPORT_PLUGIN2(MeasuresBasic, MeasuresBasicPlugin)
-
 Host* g_Host = 0;
 Host* GetHost()
 {
@@ -20,6 +18,7 @@ RESULT MeasuresBasicPlugin::Init( Host* host )
 
 Measure* MeasuresBasicPlugin::NewMeasure( const QString& name )
 {
+    UNUSED(name);
 	return new MeasuresBasic;
 }
 

@@ -5,6 +5,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <QDesktopServices>
 
 HostImpl* GetHostImpl()
 {
@@ -268,13 +269,6 @@ Format& FormatImpl::operator=( const Format &f )
 	this->stride[2] = f.Stride(2);
 	this->stride[3] = f.Stride(3);
 	this->format_changed = true;
-
-	return *this;
-}
-
-Format& FormatImpl::operator=( Format &f )
-{
-	*this = (const Format &)f;
 
 	return *this;
 }
@@ -554,9 +548,9 @@ void HostImpl::Init()
 
 	QDir pluginsDir(qApp->applicationDirPath());
 	QStringList files;
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
 	files.append(QString("YT*.dll"));
-#elif defined(Q_WS_MACX)
+#elif defined(Q_OS_MACX)
 	files.append(QString("libYT*.dylib"));
 #elif defined(Q_OS_LINUX)
 	files.append(QString("libYT*.so"));

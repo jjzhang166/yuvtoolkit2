@@ -2,7 +2,7 @@
 #define VIDEO_RENDER_WIDGET_H
 
 #include <QtCore>
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class Renderer;
 class YTPlugIn;

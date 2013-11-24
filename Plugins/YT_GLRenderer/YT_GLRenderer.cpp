@@ -5,10 +5,6 @@
 #define RENDER_FREQ	60
 
 
-
-
-Q_EXPORT_PLUGIN2(OpenGLRenderer, OpenGLRendererPlugin)
-
 Host* g_Host = 0;
 Host* GetHost()
 {
@@ -45,6 +41,7 @@ void OpenGLRendererPlugin::ReleaseRenderer( Renderer* parent )
 OpenGLRenderer::OpenGLRenderer(Host* host, QWidget* widget, const QString& name) 
 : QGLWidget(widget), m_Host(host), m_ReadyToRender(false)
 {
+    UNUSED(name);
 	setAutoBufferSwap(false); // swap buffer in rendering thread	
 
 	m_BufferSizeChanged = true;
@@ -150,11 +147,13 @@ RESULT OpenGLRenderer::Deallocate( FramePtr frame )
 
 RESULT OpenGLRenderer::GetFrame( FramePtr& frame )
 {
+    UNUSED(frame);
 	return OK;
 }
 
 RESULT OpenGLRenderer::ReleaseFrame( FramePtr frame )
 {
+    UNUSED(frame);
 	return OK;
 }
 
